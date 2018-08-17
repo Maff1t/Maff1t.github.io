@@ -1,0 +1,21 @@
+---
+layout: post
+title:  "[PWN EASY] Hackcon 2018 - BOF"
+date:   2018-08-17
+categories: Write-ups
+---
+  - CTF NAME: [Hackcon 2018](https://hackcon.in/)
+  - Category: PWN
+  - Binary: [vuln](/binary/hackcon2018-vuln)
+  - Difficulty: Easy
+
+This challenge was the easiest, of the pwn challenges in the [Hackcon CTF 2018](https://hackcon.in/).
+
+Let's open the binary and it says:
+
+'''
+  Welcome, You know what to do. So go get the flag.
+
+Hello
+>>>
+'''
