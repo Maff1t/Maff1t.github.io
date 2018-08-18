@@ -1,11 +1,12 @@
 ---
+title: "[OLD PROJECT] BlackRAT Reverse 2014"
 layout: post
-title:  "[OLD PROJECT] BlackRAT Reverse 2014"
-date: 2018-08-17
+date: 2018-08-17 17:10
+tag: rat
 projects: true
-hidden: true
+hidden: true # don't count this post in blog pagination
 category: project
-externalLink: true
+externalLink: false
 ---
 
 This was a personal project started in 2012, simply to learn something about the potential
