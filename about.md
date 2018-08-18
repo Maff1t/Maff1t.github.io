@@ -4,9 +4,8 @@ layout: page
 ---
 ![Profile Image]({{ site.url }}/{{ site.picture }})
 
-<p>I'm Lorenzo Maffia (aka Ring0ot), I'm a cybersecurity enthusiast since I was thriteen, when I bought my first computer, and I've started searching for "How to stole password and create virus".
-I'm studing computer engineering at University of Genoa (Italy) where
-I've found a lot of teammates to play CTFs competitions, in the <a class="link" href="https://zenhack.team">ZenHack Team</a>
+<p>I'm Lorenzo Maffia (aka Ring0ot), a cybersecurity enthusiast since I was thirteen, when I bought my first computer, and I've started searching for How to stole password, create virus and other stupid stuffs like those.... </n>
+I'm studing computer engineering at University of Genoa (Italy) where I've found a lot of teammates to play CTFs competitions, in the <a class="link" href="https://zenhack.team">ZenHack Team</a>
 </p>
 
 <p>I'm also part of the <a class="link" href="https://csec.it/">CSecLab</a>, the computer security laboratory of the University of Genoa, with a lot of brilliant university professors and PhD students.</p>
