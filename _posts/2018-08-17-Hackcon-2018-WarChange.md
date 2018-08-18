@@ -6,7 +6,7 @@ categories: Write-ups
 ---
   - CTF NAME: [Hackcon 2018](https://hackcon.in/)
   - Category: PWN
-  - Binary: [vuln](http://ring0ot.github.io/binary/hackcon2018-vuln)
+  - Binary: [pwn2](http://ring0ot.github.io/binary/hackcon2018-vuln)
   - Difficulty: Easy
 
 This challenge was the third challenge of the pwn category in the [Hackcon CTF 2018](https://hackcon.in/).
