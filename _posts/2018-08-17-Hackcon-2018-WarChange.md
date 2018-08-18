@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "[PWN] Hackcon 2018 - WarChange - Easy"
+title:  "[Write-up] Hackcon 2018 - WarChange - PWN"
 date:   2018-08-17
-categories: Write-ups
+category: blog
 ---
   - CTF NAME: [Hackcon 2018](https://hackcon.in/)
   - Category: PWN
