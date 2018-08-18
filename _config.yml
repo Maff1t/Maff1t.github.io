@@ -1,9 +1,9 @@
 # main text of home
-name: Lorenzo Maffia
-bio: A cyber security enthusiast and something more..
+name: "Lorenzo Maffia"
+bio: "A cyber security enthusiast and something more..."
 
 # twitter summary info
-description: A blog where I put articles about hacking, reversing, exploitation and other stuffs
+description: "A blog where I put articles about hacking, reversing, exploitation and other stuffs"
 
 # if it's an external image, update below for true
 # better with square images
