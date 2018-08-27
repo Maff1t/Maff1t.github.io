@@ -4,7 +4,7 @@ layout: page
 ---
 ![Profile Image]({{ site.url }}/{{ site.picture }})
 
-<p>I'm Lorenzo Maffia (aka Ring0ot), a cybersecurity enthusiast since I was thirteen, when I bought my first computer, and I've started searching for How to stole password, create virus and other stupid stuffs like those....
+<p>I'm Lorenzo Maffia (aka Ringr0p), a cybersecurity enthusiast since I was thirteen, when I bought my first computer, and I've started searching for How to stole password, create virus and other stupid stuffs like those....
 I'm studing computer engineering at University of Genoa (Italy) where I've found a lot of teammates to play CTFs competitions, in the <a class="link" href="https://zenhack.team">ZenHack Team</a>
 </p>
 
