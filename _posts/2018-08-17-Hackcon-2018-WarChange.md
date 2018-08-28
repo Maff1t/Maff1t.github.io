@@ -6,7 +6,7 @@ category: blog
 ---
   - CTF NAME: [Hackcon 2018](https://hackcon.in/)
   - Category: PWN
-  - Binary: [pwn2](http://ring0ot.github.io/binary/hackcon2018-vuln)
+  - Binary: [pwn2](http://ringr0p.github.io/binary/hackcon2018-vuln)
   - Difficulty: Easy
 
 This challenge was the third challenge of the pwn category in the [Hackcon CTF 2018](https://hackcon.in/).
@@ -51,4 +51,4 @@ and overwrite the two local variables at rbp-0x8 (local_8h) and at rbp-0x4 (loca
 
 Then here is the exploit and the flag:
 
-![placeholder](https://ring0ot.github.io/images/hackcon2018-pwn2-flag.jpg)
+![placeholder](https://ringr0p.github.io/images/hackcon2018-pwn2-flag.jpg)
