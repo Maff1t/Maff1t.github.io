@@ -19,4 +19,4 @@ Here there is a video in witch I demonstrate the potentiality of the software.
 
 <iframe width="760" height="510" src="https://youtube.com/embed/X2pWdgFZ-2E" frameborder="0" allowfullscreen></iframe>
 
-I just released the source to study purposes on my [github repo](http://github.com/Ringr0p), hoping someone find it useful.
+I will release the source code to study purposes on my [github repo](http://github.com/Ringr0p), hoping someone find it useful.
