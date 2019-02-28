@@ -1,6 +1,6 @@
 # main text of home
 name: Lorenzo Maffia
-bio: Ringr0p, Cybersecurity enthusiast
+bio: Maff1t, Cybersecurity enthusiast
 
 # twitter summary info
 description: A blog about technology and stuff related
@@ -16,7 +16,7 @@ picture: assets/images/profile.jpg
 #resume-external: true
 #resume-url: https://google.com/?q=my+resume
 
-url: https://ringr0p.github.io
+url: https://maff1t.github.io
 # your url: http://USERNAME.github.io
 
 permalink: /:title/
@@ -37,7 +37,7 @@ instagram: il_buon_maffi
 linkedin: lorenzomaffia
 # youtube: myyoutube
 # spotify: myspotify
-github: Ringr0p
+github: Maff1t
 
 email: lorenzomaffia97@gmail.com
 
