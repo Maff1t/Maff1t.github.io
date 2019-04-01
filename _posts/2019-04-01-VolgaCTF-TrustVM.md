@@ -6,7 +6,7 @@ category: blog
 ---
   - CTF NAME: [VolgaCTF 2019](https://q.2019.volgactf.ru/)
   - Category: Reversing
-  - Files: [TrusmeVM](http://Maff1t.github.io/binary/TrustVM.zip)
+  - Files: [TrustVM](http://Maff1t.github.io/binary/TrustVM.zip)
   - Difficulty: Hard
 
 
@@ -37,7 +37,7 @@ on a simple file having 4 'a'; the output is a file called "cleartextfile.enc" t
 
 This is an overview of the main function in IDA:
 
-![Graph overview in IDA](https://Maff1t.github.io/images/trustvm%20overview.png)
+![Graph overview in IDA](https://Maff1t.github.io/images/trustvm%20overview.png =600x)
 
 That's exactly what I was looking for to pack my bags for Russia !
 
@@ -78,7 +78,7 @@ After three 0 initialization of memory, the program do a **"0x00dA"** instructio
 
 Instruction 0x7 ~ Xor
 -
-![Instruction 0x7](https://Maff1t.github.io/images/instruction%207.png)
+![Instruction 0x7](https://Maff1t.github.io/images/instruction%207.png =600x)
 
 Instruction 0x7 is used to xor two blocks of 0x40 bytes in memory.
 At first what is xored, is our first block of cleartext, and the xorkey retrived by the program.
