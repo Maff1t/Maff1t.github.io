@@ -39,7 +39,7 @@ This is an overview of the main function in IDA:
 
 ![Graph overview in IDA](https://Maff1t.github.io/images/trustvm%20overview.png)
 
-That's exactly what I was looking for to prepare the !
+That's exactly what I was looking for to pack my bags for Russia !
 
 Let's start Reversing
 -
