@@ -7,7 +7,7 @@ category: blog
 ---
   - CTF NAME: [VolgaCTF 2019](https://q.2019.volgactf.ru/)
   - Category: Reversing
-  - Files: [TrusmeVM](http://ringr0p.github.io/binary/TrustVM.zip)
+  - Files: [TrusmeVM](http://Maff1t.github.io/binary/TrustVM.zip)
   - Difficulty: Hard
 
 
@@ -37,7 +37,7 @@ on a simple file having 4 'a' the output is a file called "cleartextfile.enc" th
 
 This is an overview of the main function in IDA:
 
-![Graph overview in IDA](https://ringr0p.github.io/images/trustvm%20overview.png)
+![Graph overview in IDA](https://Maff1t.github.io/images/trustvm%20overview.png)
 
 That's exactly what I was looking for to prepare the !
 
@@ -48,7 +48,7 @@ In the first part of the binary, the two files, passed as arguments, are read an
 
 
 After that, we arrive at this part of the code, where:
-![Switch](https://ringr0p.github.io/images/switch.png)
+![Switch](https://Maff1t.github.io/images/switch.png)
  - Two bytes from the "encrypt" program are read
  - The "Virtual program counter" is incresed of two bytes
  - Separate the 4 byte instruction, in 4 parts (nibble) that are stored in registers, in this way:
@@ -66,14 +66,14 @@ I will walk through the most important instructions interpreted by this "Virtual
 
 Instruction 0xA ~ Store
 -
-![Instruction 0xA](https://ringr0p.github.io/images/instruction%20a.png)
+![Instruction 0xA](https://Maff1t.github.io/images/instruction%20a.png)
 
 This is a basic instruction, used many times by "encrypt" program. It is used to store 0x40 bytes from the encrypt program, to the virtual memory of the interpreter, at offset "x", where "x" is a parameter passed in rsi and multiple of 0x40 (you can notice a shl rsi, 6 instruction)
 All is multiple of 0x40 because it's a 512 bit program!
 
 After three 0 initialization of memory, the program do a **"0x00dA"** instruction, that store a lot of bytes into memory. Those bytes rapresent the **initial xor key** used to cypher the cleartext passed as argument.
 
-![Encrypt program](https://ringr0p.github.io/images/encrypt%20program.png)
+![Encrypt program](https://Maff1t.github.io/images/encrypt%20program.png)
 
 Instruction 0x7 ~ Xor
 -
