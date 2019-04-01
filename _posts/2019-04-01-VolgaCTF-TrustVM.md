@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title:  "[Write-up] Reversing a 512 bit Virtual Machine ~ TrustVM ~ VolgaCTF 2019"
@@ -118,20 +117,22 @@ Encryption process
 -
 If each block had been encrypted with the same parameters and xored with the same key, the game would have finished, but unfortunatly it was more complicated.
 After a bit of dynamic analysis we understood that the process of encryption was defined like this:
-
-> xored1 = xor (cleartext0, xorkey)
-> first_crypted_block = crypt(xored1, 9, 5)
-> xorkey = xor (cleartext0, crypt (xorkey, 13, 7))
-> xored2 = xor (cleartext1, xorkey)
-> second_crypted_block = crypt(xored2)
-> ...and so on
-	
+```
+xored1 = xor (cleartext0, xorkey)
+first_crypted_block = crypt(xored1, 9, 5)
+xorkey = xor (cleartext0, crypt (xorkey, 13, 7))
+xored2 = xor (cleartext1, xorkey)
+second_crypted_block = crypt(xored2)
+...and so on
+```
+```
 Then what we have to do to invert this process is:
 
-> cleartext0 = xor ( decrypt(first_crypted_block, 9, 5), xorkey)
-> xorkey = xor (cleartext0, crypt (xorkey, 13, 7))
-> cleartext1 = xor (decrypt (second_crypted_block, 9, 5), xorkey)
-> ....
+cleartext0 = xor ( decrypt(first_crypted_block, 9, 5), xorkey)
+xorkey = xor (cleartext0, crypt (xorkey, 13, 7))
+cleartext1 = xor (decrypt (second_crypted_block, 9, 5), xorkey)
+....
+```
 
 You can notice that the xorkey is encrypted with different parameters compared to the cleartext (another problem to figure out that got us crazy)
 
