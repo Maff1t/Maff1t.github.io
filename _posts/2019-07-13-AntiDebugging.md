@@ -7,10 +7,10 @@ category: blog
 
 
 ## Introduction
-I've just finished my bachelor degree thesis about the development of a [Panda-re](https://github.com/panda-re/panda) plugin to detect malware evasion's techniques on Windows  (anti-debugging, anti-VM, anti-sandbox and so on...) and I remembered of an old, program that was really difficoult to debug.
+I've just finished my bachelor degree thesis about the development of a [Panda-re](https://github.com/panda-re/panda) plugin to detect malware evasion's techniques on Windows  (anti-debugging, anti-VM, anti-sandbox and so on...) and I remembered of an old program, that was really difficoult to debug.
 So with my newly acquired knowledge, I decided to try again to analyze that program and figure out how to debug it.
 
-It uses a lot of **anti-debugging techniques**, then I manage to do a walk-through about all of those interesting tricks and how to defeat them to finally debug the target program.
+It uses a lot of **anti-debugging techniques**, then I managed to do a walk-through about all of those interesting tricks and how to defeat them to finally debug the target program.
 
 You can download the program from [here](https://github.com/Maff1t/Maff1t.github.io/blob/master/binary/hackcon2018-bof)
 
