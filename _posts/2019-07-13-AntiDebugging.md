@@ -12,7 +12,7 @@ So with my newly acquired knowledge, I decided to try again to analyze that prog
 
 It uses a lot of **anti-debugging techniques**, then I manage to do a walk-through about all of those interesting tricks and how to defeat them to finally debug the target program.
 
-You can download the program from [here](http://bho.it)
+You can download the program from [here](https://github.com/Maff1t/Maff1t.github.io/blob/master/binary/hackcon2018-bof)
 
 ## Overview of the binary
 
@@ -34,8 +34,8 @@ In our case, lpTopLevelExceptionFilter  have this strange code (I skipped some p
 
 <details>
 <summary>Click here to View/Hide the code</summary>
+    ```code
     
-    ......
     v3 = ExceptionInfo->ExceptionRecord->ExceptionCode; //get exception code
       
       if ( v3 <= 3221225617 )
@@ -63,6 +63,7 @@ In our case, lpTopLevelExceptionFilter  have this strange code (I skipped some p
         }
         v6 = v3 == 3221225501;
         .......
+        ```
 </details>
 
 It is not immidiatly clear what this function does, but if we ask IDA to solve the constants like 3221225617, we find that they are:
