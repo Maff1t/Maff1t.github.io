@@ -34,8 +34,7 @@ In our case, lpTopLevelExceptionFilter  have this strange code (I skipped some p
 
 <details>
 <summary>Click here to View/Hide the code</summary>
-    ```code
-    
+    ```javascript
     v3 = ExceptionInfo->ExceptionRecord->ExceptionCode; //get exception code
       
       if ( v3 <= 3221225617 )
@@ -63,7 +62,7 @@ In our case, lpTopLevelExceptionFilter  have this strange code (I skipped some p
         }
         v6 = v3 == 3221225501;
         .......
-        ```
+    ```
 </details>
 
 It is not immidiatly clear what this function does, but if we ask IDA to solve the constants like 3221225617, we find that they are:
@@ -282,7 +281,7 @@ Let's examine *elab_passw* function:
 
  The first thing that we can notice, is that **this function has no sense**....BUT we can see a lot of *int 3* instructions (**THOSE ARE OUR BREAKPOINTS**!) Each time the execution reach an *int 3*, the code is "modified" by the debugger process, that intercept the breakpoint, and call the **handle_breakpoint** function! We have to patch this function to understand what is the correct flow.
 
-# Patching the binary
+## Patching the binary
 
 
 Ok, now that we know, how and where, the code is modified, we can modify the code manually to understand what is truly executed! In the thread's function, when we find an *int 3* instruction, we know that we have to read the next byte, calculate  **(byte >> 2) and 7 + 1** and simply **NOP** (place a No OPeration instruction) the bytes that are not executed, to see the correct code.
