@@ -8,9 +8,9 @@ category: blog
 
 ## Introduction
 I've just finished my bachelor degree thesis about the development of a [Panda-re](https://github.com/panda-re/panda) plugin to detect malware evasion's techniques on Windows  (anti-debugging, anti-VM, anti-sandbox and so on...) and I remembered of an old program, that was really difficoult to debug.
-So with my newly acquired knowledge, I decided to try again to analyze that program and figure out how to debug it.
+So with my newly acquired knowledge, I decided to try again and analyze that program.
 
-It uses a lot of **anti-debugging techniques**, then I managed to do a walk-through about all of those interesting tricks and how to defeat them to finally debug the target program.
+It uses a lot of **anti-debugging techniques**, then I managed to do a walk-through about all of those interesting tricks and how to defeat them to finally debug it.
 
 You can download the program from [here](https://github.com/Maff1t/Maff1t.github.io/blob/master/binary/hackcon2018-bof)
 
@@ -19,16 +19,16 @@ You can download the program from [here](https://github.com/Maff1t/Maff1t.github
 ![](https://i.ibb.co/3RSKQ7t/screenshot.png)
 
 The binary seems to be the classical "CrackMe" style program, where the goal is to find the correct password to unlock it.
-The first thing that I do on those windows programs, is open the debugger and look for API calls like "GetDlgItemTextA" that can read the ASCII string from the input box to check if the password is correct and "MessageBoxA" to print the correct or uncorrect message.
+The first thing that I do on those windows programs, is open the debugger and look for API calls like "GetDlgItemTextA", that can read the ASCII string from the input box to check if the password is correct, and "MessageBoxA" to print the correct or uncorrect message.
 Trying to do it and placing breakpoints we notice that those APIs are in the code of the program, but seems to be unreachable while debugging....Something strange happens behind the scenes...
 
 
 ## 1. SetUnhandledExceptionFilter
 
-Trying to decompile the program with **IDA**, in main function, we can immidiatly notice a call to the windows API **SetUnhandledExceptionFilter(lpTopLevelExceptionFilter)**. This API can catch an *unhandled exception* and pass the execution to *lpTopLevelExceptionFilter* (that is a pointer to function). This can be a suspicious behaviour, because if a debugger is attached to the process, any exception is handled by the debugger. 
+Trying to decompile the program with **IDA**, we can immidiatly notice a call to the windows API **SetUnhandledExceptionFilter (lpTopLevelExceptionFilter)** in the main function. This API can catch an *unhandled exception* and pass the execution to *lpTopLevelExceptionFilter* (it is a pointer to function). This can be a suspicious behaviour, because if a debugger is attached to the process, any exception is handled by the debugger. 
 You see the possible anti-debugging trick?
 
-If in the code we use an *int 3* instruction (otherwise, we raise an exception) and our *lpTopLevelExceptionFilter function is not called, we know that the program is debugged!
+If in the code we use an *int 3* instruction (otherwise, we raise an exception) and our *lpTopLevelExceptionFilter* function is not called, we know that the program is debugged!
 
 In our case, lpTopLevelExceptionFilter  have this strange code (I skipped some parts):
 
@@ -37,30 +37,30 @@ In our case, lpTopLevelExceptionFilter  have this strange code (I skipped some p
 ```C
     v3 = ExceptionInfo->ExceptionRecord->ExceptionCode; //get exception code
       
-      if ( v3 <= 3221225617 )
+    if ( v3 <= 3221225617 )
+    {
+      if ( v3 >= 3221225613 )
       {
-        if ( v3 >= 3221225613 )
+  LABEL_3:
+        v2 = 1;
+        goto LABEL_4;
+      }
+      if ( v3 == 3221225477 )
+      {
+        v8 = (void (__cdecl *)(signed int))signal(11, 0);
+        if ( v8 == (void (__cdecl *)(signed int))1 )
         {
-    LABEL_3:
-          v2 = 1;
-          goto LABEL_4;
+          signal(11, 1);
         }
-        if ( v3 == 3221225477 )
+        else
         {
-          v8 = (void (__cdecl *)(signed int))signal(11, 0);
-          if ( v8 == (void (__cdecl *)(signed int))1 )
-          {
-            signal(11, 1);
-          }
-          else
-          {
-            if ( !v8 )
-              return v1;
-            v8(11);
-          }
-          return -1;
+          if ( !v8 )
+            return v1;
+          v8(11);
         }
-        v6 = v3 == 3221225501;
+        return -1;
+      }
+      v6 = v3 == 3221225501;
 ```
 
 
@@ -101,7 +101,6 @@ After a bit of junk code, we find an interesting function that seems to be the i
       return 0;
     }
 ```
-
 
 I've already renamed the functions like "get_parent_PID" and "HasSamePath" that were easy functions to reverse. We notice that if the parent process have not the same path of the current process, it creates a new process and exit!
 This is a clear anti-debugging behaviour, because, in general, a debuggee process is the child of his debugger process, then it has not the same path of his parent !
