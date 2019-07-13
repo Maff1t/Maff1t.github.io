@@ -32,10 +32,9 @@ If in the code we use an *int 3* instruction (otherwise, we raise an exception) 
 
 In our case, lpTopLevelExceptionFilter  have this strange code (I skipped some parts):
 
-<details>
-<summary>Click here to View/Hide the code</summary>
-```C
 
+
+```C
     v3 = ExceptionInfo->ExceptionRecord->ExceptionCode; //get exception code
       
       if ( v3 <= 3221225617 )
@@ -63,7 +62,7 @@ In our case, lpTopLevelExceptionFilter  have this strange code (I skipped some p
         }
         v6 = v3 == 3221225501;
 ```
-</details>
+
 
 It is not immidiatly clear what this function does, but if we ask IDA to solve the constants like 3221225617, we find that they are:
 *EXCEPTION_FLT_OVERFLOW, EXCEPTION_FLT_DENORMAL_OPERAND, EXCEPTION_ACCESS_VIOLATION, EXCEPTION_INT_DIVIDE_BY_ZERO* ........
@@ -73,8 +72,8 @@ Nothing interesting, it is only a default exception handler..... sad story.... I
 
 After a bit of junk code, we find an interesting function that seems to be the ipotetic main function:
 
-<details>
-<summary>int __stdcall WinMain(HINSTANCE a1, int a2, int a3, int a4)</summary>
+
+```C
     
       CHAR *v4; // eax
       struct _STARTUPINFOA StartupInfo; // [esp+40h] [ebp-68h]
@@ -101,8 +100,8 @@ After a bit of junk code, we find an interesting function that seems to be the i
       }
       return 0;
     }
+```
 
-</details>
 
 I've already renamed the functions like "get_parent_PID" and "HasSamePath" that were easy functions to reverse. We notice that if the parent process have not the same path of the current process, it creates a new process and exit!
 This is a clear anti-debugging behaviour, because, in general, a debuggee process is the child of his debugger process, then it has not the same path of his parent !
@@ -113,9 +112,7 @@ Since a debugger is the parent process of a debuggee, and whatever process can h
 Then, a clear anti-debugging technique that someone can use, is to spawn a child process, that execute something, and debug it to avoid the attachment of an external debugger.
 It's exacly what happens in the function that I called "CreateThread_and_debug".
 
-<details>
-<summary>BOOL __cdecl CreateThread_and_debug(DWORD dwProcessId)</summary>
-
+```C
       DWORD ThreadId; // [esp+2Ch] [ebp-Ch]
       HANDLE hThread; // [esp+30h] [ebp-8h]
       HANDLE hProcess; // [esp+34h] [ebp-4h]
@@ -137,7 +134,7 @@ It's exacly what happens in the function that I called "CreateThread_and_debug".
         TerminateProcess(hProcess, 1u);
         return CloseHandle(hProcess);
       }
-</details>
+```
 
 As you can see, the child process create a thread in the parent process (the PID passed to the function is the PPID retrived before) and debugs it. This thread execute the code of the *StartAddress* function, that we will analyse later...
 Ok, to recap the flow:
@@ -153,9 +150,7 @@ It seems easy, but now comes the interesting part of this program.
 
 Let's analyse the second part of the CreateThread_and_debug function's code :
 
-<details>
-<summary>Click here to View/Hide the code</summary>
-
+```C
     while ( 1 )
       {
         while ( 1 )
@@ -179,12 +174,13 @@ Let's analyse the second part of the CreateThread_and_debug function's code :
       }
       return TerminateProcess(hProcess, 1u);
     }
-</details>
+```
 
 If we look deep in the code that debug the parent process, we can notice that if comes an exception from the thread created in the parent process, and in particular if it is a DEBUG_EXCEPTION, the program call another function that i called **handle_breakpoint**.
 
 This is the function handle_breakpoint:
 
+```C
     BOOL __cdecl handle_breakpoint(HANDLE hProcess, HANDLE hThread)
     {
       char Buffer; // [esp+2Fh] [ebp-2D9h]
@@ -201,6 +197,7 @@ This is the function handle_breakpoint:
       Context.Eax = __ROL4__(Context.Eax, 1);
       return SetThreadContext(hThread, &Context) != 0;
     }
+```
 
 This function reads a byte in the parent process, at the address pointed by the program counter (EIP register) and puts it in the "Buffer" variable, then modifies two registers: EIP and EAX. Modifying in this way EIP, means moving the program counter of the program "Buffer" bytes ahead
 EAX is modified with a rotation left of his 32 bits, in this way (in this image the example is done with 8 bit register):
@@ -212,9 +209,9 @@ Mmm...This may have sense only if the function used by the thread, contains some
 Let's examine the thread's function. 
 As I said at the beginning, the input is read by the winows API *GetDlgItemTextA*, then I will focus on that part of code (IDA doesn't decompile it then we will see only assembly):
 
-<details>
-<summary>Click here to View/Hide the code</summary>
 
+
+```code
     .text:004013CC                 mov     dword ptr [esp+0Ch], 40h
     .text:004013D4                 mov     dword ptr [esp+8], offset serial
     .text:004013DC                 mov     dword ptr [esp+4], 66h
@@ -236,15 +233,13 @@ As I said at the beginning, the input is read by the winows API *GetDlgItemTextA
     .text:00401427                 call    MessageBoxA
     .text:0040142C                 sub     esp, 10h
     .text:0040142F                 jmp     short loc_401461
+```
 
-</details>
 
 This function take the input, pass it to the function (that I called) *elab_passw*, and check the returned value (in EAX register) to decide which message have to print.
 Let's examine *elab_passw* function:
 
-<details>
-<summary>Click here to View/Hide the code</summary>
-
+```code
     .text:00401BBC                 push    eax
     .text:00401BBD                 add     eax, ebx
     .text:00401BBF                 shl     eax, 1
@@ -277,7 +272,7 @@ Let's examine *elab_passw* function:
     .text:00401BF2                 bnd js short near ptr loc_401BEE+1
     .text:00401BF5                 or      eax, 1C289E3h
     .text:00401BFA                 retn    0C201h
-</details>
+```
 
  The first thing that we can notice, is that **this function has no sense**....BUT we can see a lot of *int 3* instructions (**THOSE ARE OUR BREAKPOINTS**!) Each time the execution reach an *int 3*, the code is "modified" by the debugger process, that intercept the breakpoint, and call the **handle_breakpoint** function! We have to patch this function to understand what is the correct flow.
 
@@ -291,9 +286,7 @@ If we NOP also the *int 3* instruction (1 byte long), we have always a minimum o
 
 This is the function *elab_passw* patched (I deleted nop instructions):
 
-<details>
-<summary>Click here to View/Hide the code</summary>
-
+```code
     .text:00401BC6                 push    ebp
     .text:00401BC7                 mov     ebp, esp
     .text:00401BC9                 rol     eax, 1
@@ -324,8 +317,8 @@ This is the function *elab_passw* patched (I deleted nop instructions):
     .text:00401C1B                 pop     ebx
     .text:00401C1C                 pop     ebp
     .text:00401C1D                 retn
+```
 
-</details>
 
 This small pieace of code, simply means (sorry for the pseudo-code used):
 
