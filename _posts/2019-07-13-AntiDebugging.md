@@ -25,7 +25,7 @@ Trying to do it and placing breakpoints we notice that those APIs are in the cod
 
 ## 1. SetUnhandledExceptionFilter
 
-Trying to decompile the program with **IDA**, we can immidiatly notice a call to the windows API **SetUnhandledExceptionFilter (lpTopLevelExceptionFilter)** in the main function. This API can catch an *unhandled exception* and pass the execution to *lpTopLevelExceptionFilter* (it is a pointer to function). This can be a suspicious behaviour, because if a debugger is attached to the process, any exception is handled by the debugger. 
+Trying to decompile the program with **IDA**, we can immediately notice a call to the windows API **SetUnhandledExceptionFilter (lpTopLevelExceptionFilter)** in the main function. This API can catch an *unhandled exception* and pass the execution to *lpTopLevelExceptionFilter* (it is a pointer to function). This can be a suspicious behaviour, because if a debugger is attached to the process, any exception is handled by the debugger. 
 You see the possible anti-debugging trick?
 
 If in the code we use an *int 3* instruction (otherwise, we raise an exception) and our *lpTopLevelExceptionFilter* function is not called, we know that the program is debugged!
@@ -198,8 +198,8 @@ This is the function handle_breakpoint:
     }
 ```
 
-This function reads a byte in the parent process, at the address pointed by the program counter (EIP register) and puts it in the "Buffer" variable, then modifies two registers: EIP and EAX. Modifying in this way EIP, means moving the program counter of the program "Buffer" bytes ahead
-EAX is modified with a rotation left of his 32 bits, in this way (in this image the example is done with 8 bit register):
+This function reads a byte in the parent process, at the address pointed by the program counter (EIP register) and puts it in the "Buffer" variable, then modifies two registers: EIP and EAX. Modifying in this way EIP, means moving the program counter of the program, "Buffer" bytes ahead.
+EAX, instead, is modified with a rotation left of his 32 bits, in this way (in this image the example is done with 8 bit register):
 
 ![](http://www.giobe2000.it/Tutorial/img/istruz/ROL.gif)
 
@@ -235,7 +235,7 @@ As I said at the beginning, the input is read by the winows API *GetDlgItemTextA
 ```
 
 
-This function take the input, pass it to the function (that I called) *elab_passw*, and check the returned value (in EAX register) to decide which message have to print.
+This function takes the input, pass it to the function (that I called) *elab_passw*, and check the returned value (in EAX register) to decide which message have to print.
 Let's examine *elab_passw* function:
 
 ```code
@@ -273,12 +273,12 @@ Let's examine *elab_passw* function:
     .text:00401BFA                 retn    0C201h
 ```
 
- The first thing that we can notice, is that **this function has no sense**....BUT we can see a lot of *int 3* instructions (**THOSE ARE OUR BREAKPOINTS**!) Each time the execution reach an *int 3*, the code is "modified" by the debugger process, that intercept the breakpoint, and call the **handle_breakpoint** function! We have to patch this function to understand what is the correct flow.
+ The first thing that we can notice, is that **this function has no sense**....BUT we can see a lot of *int 3* instructions (**THOSE ARE OUR BREAKPOINTS**!). Each time the execution reach an *int 3*, the code is "modified" by the debugger process, that intercept the breakpoint, and call the **handle_breakpoint** function! We have to patch this function to understand what is the correct flow.
 
 ## Patching the binary
 
 
-Ok, now that we know, how and where, the code is modified, we can modify the code manually to understand what is truly executed! In the thread's function, when we find an *int 3* instruction, we know that we have to read the next byte, calculate  **(byte >> 2) and 7 + 1** and simply **NOP** (place a No OPeration instruction) the bytes that are not executed, to see the correct code.
+Ok, now that we know how and where the code is modified, we can patch the code manually to understand what is truly executed! In the thread's function, when we find an *int 3* instruction, we know that we have to read the next byte, calculate  **(byte >> 2) and 7 + 1** and simply **NOP** (place a No OPeration instruction) the bytes that are not executed, to see the correct code.
 We have to remember to also change EAX each time!!!
 
 If we NOP also the *int 3* instruction (1 byte long), we have always a minimum of two bytes in which we can write, because, even if *(byte >> 2) and 7* is 0, we can write one byte on *int 3* and another byte because of the formula ( *(byte >> 2) and  7 **+ 1***). Then instead of nopping, we can insert the instruction *rol eax, 1* that fortunatly is 2 bytes long and is exactly what the debugger process do. 
@@ -350,7 +350,7 @@ We find that the correct password is "W4t3rZooi"!
 
 In the end, to debug this program we had to patch it in two steps. The first one to avoid self-debugging, and the second one to adjust the flow of the program, deleting *int 3* exceptions.
 
-Those tricks are wide-spread in malwares as anti-analysis techniques, and are really funny for reversers.
+Those tricks are widespread in malwares as anti-analysis techniques, and are really funny for reversers.
 It was a really interesting program to reverse ;)
 
 Bye, Maff1t
