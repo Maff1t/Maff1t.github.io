@@ -12,9 +12,9 @@ picture: assets/images/profile.jpg
 
 # If you want to include your resume, set to true
 # and specify source (external or local).
-#resume: true
-#resume-external: true
-#resume-url: https://google.com/?q=my+resume
+resume: true
+resume-external: true
+resume-url: https://github.com/Maff1t/Maff1t.github.io/raw/master/CV.pdf
 
 url: https://maff1t.github.io
 # your url: http://USERNAME.github.io
@@ -44,14 +44,14 @@ email: lorenzomaffia97@gmail.com
 width: large
 
 # if you don't need projects, comment the *projects* configs below
-projects: true
+# projects: true
 
 # if you don't need "about" or "blog", comment them out below
 about: true
 blog: true
 
 # do you want to show the "read time" of the posts?
-read-time: true
+read-time: false
 
 # do you want to show the "tags" inside the posts?
 #show-tags: true
