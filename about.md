@@ -15,6 +15,3 @@ During my free time, I enjoy playing CTFs competitions with <a class="link" href
 
 
 <p>I think hacking is only a way of thinking. Thinking outsite of the box and being curious about everything.</p>
-
-
-This is my <a class="link" href="https://github.com/Maff1t/Maff1t.github.io/blob/master/CV.pdf">Curriculum Vitae</a>
