@@ -107,7 +107,7 @@ In this function (last figure) the parameter A_0 is an integer that identify the
 Then, this is how the emails  with stolen data arrive to the malware owner:
 
 <figure>
-<img src="https://i.ibb.co/K5C6FyR/stealing-IOC.jpg" style="width:100%">
+<img src="https://i.ibb.co/K5C6FyR/stealing-IOC.jpg" style="width:60%">
 </figure>
 
 
