@@ -23,7 +23,7 @@ The downloaded **bobbbb.exe** is an AutoIT executable that contains an Agent Tes
 ## AutoIT Dropper Deobfuscation
 
 AutoIT is a scripting language for Windows, really used to create malwares because of his high-level abstraction and his low rate of antivirus detection.
-Fortunately, it's compilation process is easily to invert, with tools like [Exe2Aut](http://domoticx.com/autoit3-decompiler-exe2aut/), that returns an almost perfect AutoIT source code. However, the code is, really often, highly obfuscated, then difficult to understand.
+Fortunately, it's compilation process is easy to invert, with tools like [Exe2Aut](http://domoticx.com/autoit3-decompiler-exe2aut/), that returns an almost perfect AutoIT source code. However, the code is, really often, highly obfuscated, then difficult to understand.
 
 As you can see in figure 3, all strings are encrypted by one or more levels of obfuscation. Fortunately all those decryption functions return a string, and since we can modify the source code, I modified those functions directly in the program to write to a file the result of the decryption. After that, with a simple python script a subsituted in the source code the decrypted strings to obtain something more readable. 
 
