@@ -86,24 +86,20 @@ Through a dynamic analysis, we can easily see that it try to access to all brows
 ### Strings decryption
 
 Analyzing the extracted payload with [dnSPY](https://github.com/0xd4d/dnSpy), we can see another obfuscated code. 
-What we want to retrieve are the SMTP credentials, that are hardcoded in the extracted payload (figure 7). All strings are decrypted by ***Module.\u205f ()*** function.
+What we want to retrieve are the SMTP credentials, that are hardcoded in the extracted payload (figure below). All strings are decrypted by ***Module.\u205f ()*** function.
 
 <figure>
-<a href="https://ibb.co/M7c0vfz"><img src="https://i.ibb.co/pdfF7QH/SMTP-credentials.png" style="width:90%"></a>
- <figcaption>Figure 7: SMTP data initialization</figcaption>
+<a href="https://ibb.co/M7c0vfz"><img src="https://i.ibb.co/pdfF7QH/SMTP-credentials.png" style="width:100%"></a>
 </figure>
 
-In this function (Figure 8) the parameter A_0 is an integer that identify the string to decrypt. It is used only at line 18055, then I decided to put a breakpoint at line 18056 and modify manually the value of num3 variable in memory, setting the indexes corresponding to the SMTP credentials (this process, because unfortunately during debugging, I can't reach the SMTP stub....).
+In this function (last figure) the parameter A_0 is an integer that identify the string to decrypt. It is used only at line 18055, then I decided to put a breakpoint at line 18056 and modify manually the value of num3 variable in memory, setting the indexes corresponding to the SMTP credentials (this process, because unfortunately during debugging, I can't reach the SMTP stub....).
 
 <figure>
 <img src="https://i.ibb.co/t2ft7PC/String-decryption-in-payload.png" style="width:80%">
- <figcaption>Figure 8: String decryption function</figcaption>
 </figure>
 
 > Username index: 602112 -> 0x00093000 -> contact@euramtec.pw
-
 > Password index:   602240 -> 0x00093080 -> ******* 
-
 > SMTP host index: 602368 -> 0x00093100 -> "us2.smtp.mailhostbox.com"
 
 ### Other useful resources
