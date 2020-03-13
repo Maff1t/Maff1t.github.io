@@ -99,7 +99,9 @@ In this function (last figure) the parameter A_0 is an integer that identify the
 </figure>
 
 > Username index: 602112 -> 0x00093000 -> contact@euramtec.pw
+
 > Password index:   602240 -> 0x00093080 -> ******* 
+
 > SMTP host index: 602368 -> 0x00093100 -> "us2.smtp.mailhostbox.com"
 
 ### Other useful resources
