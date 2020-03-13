@@ -5,7 +5,7 @@ date:   2020-03-05
 category: blog
 ---
 
-we found a new, strange, malspam campaign with, as target, the sales office of an important company.
+The 29th of February 2020, thanks to our **Malware Intelligence Platform**, we found a new, strange, malspam campaign with, as target, the sales office of an important company.
 The email was the following:
 <figure>
 <img src="https://i.ibb.co/K0D7mkh/email.jpg" alt="malspam" style="width:60%">
