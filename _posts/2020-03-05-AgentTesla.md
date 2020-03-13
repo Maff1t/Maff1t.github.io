@@ -5,10 +5,10 @@ date:   2020-03-05
 category: blog
 ---
 
-The 29th of February 2020, our **Malware Intelligence** system found a new malspam email with target CommunicationValley Reply.
+we found a new, strange, malspam campaign with, as target, the sales office of an important company.
 The email was the following:
 <figure>
-<img src="https://i.ibb.co/fxF21SB/mail.png" alt="malspam" style="width:60%">
+<img src="https://i.ibb.co/K0D7mkh/email.jpg" alt="malspam" style="width:60%">
 <figcaption>Figure 1: Malspam email</figcaption>
 </figure>
 
