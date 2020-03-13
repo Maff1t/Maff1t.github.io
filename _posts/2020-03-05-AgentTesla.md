@@ -104,6 +104,13 @@ In this function (last figure) the parameter A_0 is an integer that identify the
 
 > SMTP host index: 602368 -> 0x00093100 -> "us2.smtp.mailhostbox.com"
 
+Then, this is how the emails  with stolen data arrive to the malware owner:
+
+<figure>
+<img src="https://i.ibb.co/K5C6FyR/stealing-IOC.jpg" style="width:100%">
+</figure>
+
+
 ### Other useful resources
 
  - [Technical analysis of an old similar case](https://blog.talosintelligence.com/2019/11/custom-dropper-hide-and-seek.html)
